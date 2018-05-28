@@ -10,6 +10,7 @@ const jwtStrategy = require('./passport/jwt');
 const { dbConnect } = require('./db-mongoose');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const questionRouter = require('./routes/questions');
 
 
 // Utilize the given `strategy`
@@ -39,6 +40,7 @@ app.use(express.json());
 // Mount routers
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
+app.use('/api', questionRouter);
 
 // Catch-all 404
 app.use(function (req, res, next) {
