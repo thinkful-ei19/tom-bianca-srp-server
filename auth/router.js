@@ -2,7 +2,7 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const jwt = require('jwtwebtoken');
+const jwt = require('jsonwebtoken');
 
 const config = require('../config');
 const router = express.Router();
@@ -15,7 +15,7 @@ const createAuthToken = function(user){
     });
 };
 
-const localAuth = passprt.authenticate('local', {session: false});
+const localAuth = passport.authenticate('local', {session: false});
 router.use(bodyParser.json());
 router.post('/login', localAuth, (req,res) => {
     const authToken = createAuthToken(req.user.serialize());

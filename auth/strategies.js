@@ -33,7 +33,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
           return callback(err, false);
       });
 });
-const jwtStrategy = new jwtStrategy(
+const jwtStrategy = new JWTStrategy(
     {
         secretOrKey : JWT_SECRET,
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
