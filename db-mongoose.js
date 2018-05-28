@@ -12,7 +12,7 @@ function dbConnect(url = DATABASE_URL) {
       console.error(err);
     });
 }
-
+console.log('database url', DATABASE_URL);
 function dbDisconnect() {
   return mongoose.disconnect();
 }
