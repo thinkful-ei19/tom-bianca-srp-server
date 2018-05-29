@@ -3,8 +3,35 @@
 const express = require('express');
 
 const User = require('../models/user');
+const LinkedList = require('../linkedList');
+const Question = require('../data');
+const mongoose = require('mongoose');
 
 const router = express.Router();
+
+
+router.get('/users', (req, res, next) => {
+  User.find()
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get('/users/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  User.findById(id)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/users', (req, res, next) => {
@@ -81,13 +108,21 @@ router.post('/users', (req, res, next) => {
   let { username, password, fullname = '' } = req.body;
   fullname = fullname.trim();
 
+  // Create an user instance of questions 
+  let userQuestions = new LinkedList();
+  Question.forEach((item) => {
+    userQuestions.insertFirst(item);
+  });
+  console.log(JSON.stringify(userQuestions));
+
   // Remove explicit hashPassword if using pre-save middleware
   return User.hashPassword(password)
     .then(digest => {
       const newUser = {
         username,
         password: digest,
-        fullname
+        fullname,
+        userQuestions
       };
       return User.create(newUser);
     })
