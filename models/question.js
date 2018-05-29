@@ -20,4 +20,4 @@ questionSchema.set('toObject', {
   }
 });
 
-module.exports = mongoose.model('Question', noteSchema);
+module.exports = mongoose.model('Question', questionSchema);

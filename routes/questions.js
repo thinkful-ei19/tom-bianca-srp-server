@@ -9,7 +9,7 @@ const Question = require('../models/question');
 let questions = [ {'Wife': 'Ābrazÿrys'}, {'Slippery/Sleek': 'Adere'} ];
 
 router.get('/questions', (req, res) => {
-    console.log(res.json({ questions }));
+    res.json(questions[0]);
     
     //const userId = req.user.id;
     // let filter = { userId };
@@ -21,4 +21,4 @@ router.get('/questions', (req, res) => {
     //         next(err);
     //     });
 });
-module.export = router;
+module.exports = router;
