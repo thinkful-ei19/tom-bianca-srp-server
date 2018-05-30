@@ -48,16 +48,23 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 router.post('/questions/:id', jwtAuth, (req, res, next) => {
   const { id } = req.user;
   const {answer} = req.body;
+  let correctCount;
+  let incorrectCount;
   console.log(answer);
   User.findById(id)
     .then((result) => {
       if (answer === displayAnswer(result.userQuestions)) { 
-        //take the list and remove the first node
-        result.userQuestions.remove(currNode);
+        correctCount++;
+        //take the list and insert node after the next node
+        result.userQuestions.insertAfter(result.userQuestions.next.next);
         //display next question
         res.json(displayQuestion(result.userQuestions.next));
+        
       } else {
+        incorrectCount++;
         res.json('Sorry try again');
+        result.userQuestions.insertAfter(result.userQuestions.next);
+        
       }
     })
     .catch((err) => {
