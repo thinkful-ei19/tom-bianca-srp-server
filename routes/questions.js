@@ -5,7 +5,7 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 
-const {LinkedList, displayQuestion, displayAnswer, findPrevious, reverse} = require('../linkedList');
+const {LinkedList, displayQuestion, displayAnswer, findPrevious, reverse } = require('../linkedList');
 const User = require('../models/user');
 
 const passport = require('passport');
@@ -52,6 +52,9 @@ router.post('/questions/:id', jwtAuth, (req, res, next) => {
   User.findById(id)
     .then((result) => {
       if (answer === displayAnswer(result.userQuestions)) { 
+        //take the list and remove the first node
+        result.userQuestions.remove(currNode);
+        //display next question
         res.json(displayQuestion(result.userQuestions.next));
       } else {
         res.json('Sorry try again');
