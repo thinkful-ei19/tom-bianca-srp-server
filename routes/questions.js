@@ -74,9 +74,6 @@ router.put('/questions', jwtAuth, (req, res, next) => {
           });
       }
     })
-    .then(() => {
-      return res.json({ answer });
-    })
     .catch((err) => {
       next(err);
     });
