@@ -47,9 +47,11 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 // Answer current question
 router.post('/questions/:id', jwtAuth, (req, res, next) => {
   console.log('this is req.body', req.body.content);
+  //when using postman we get the req.body otherwise undefined
   User.findById(req.user.id)
     .then((result) => {
       console.log(result.userQuestions);
+      //shows in brower not in postman
       if(displayAnswer(result.userQuestions) === req.body.content){
       //if (answer === displayAnswer(result.userQuestions)) { 
         //correctCount++;
