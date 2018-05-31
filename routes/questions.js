@@ -23,8 +23,7 @@ router.get('/questions', (req, res) => {
 router.get('/questions/:id', jwtAuth, (req, res, next) => {
   User.findById(req.user.id)
     .then((result) => {
-      
-      res.end(displayQuestion(result.userQuestions));
+      res.json(displayQuestion(result.userQuestions));
     })
     .catch((err) => {
       next(err);
