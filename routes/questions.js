@@ -45,15 +45,20 @@ router.put('/questions', jwtAuth, (req, res, next) => {
       // if user response is correct then execute block bellow
       if (answer === displayAnswer(result.userQuestions).toLowerCase()) {
         dragons+=1;
+        console.log(mValue);
         mValue = mValue * 2;
+        console.log(mValue);
         let newHead = result.userQuestions.head.next;
         correct = true;
         let tempNode = result.userQuestions.head;
-        while (tempNode.next !== null) {
-          tempNode = tempNode.next;
+        tempNode.value.mValue = mValue;
+        for (let i = 0; i <= mValue; i++) {
+          if (tempNode.next !== null) {
+            tempNode = tempNode.next;
+          }
         }
+        result.userQuestions.head.next = tempNode.next;
         tempNode.next = result.userQuestions.head;
-        tempNode.next.next = null;
         result.userQuestions.head = newHead;
 
         User.updateOne({ _id: id }, { $set: { userQuestions: result.userQuestions , dragons: result.dragons } })
@@ -67,6 +72,7 @@ router.put('/questions', jwtAuth, (req, res, next) => {
         mValue = 1;
         let newHead = result.userQuestions.head.next;
         let tempNode = result.userQuestions.head;
+        tempNode.value.mValue = mValue;
         for (let i = 0; i < 2; i++) {
           tempNode = tempNode.next;
         }
@@ -82,6 +88,7 @@ router.put('/questions', jwtAuth, (req, res, next) => {
       res.json({ answer, correct, dragons });
     })
     .catch((err) => {
+      console.log(err);
       next(err);
     });
 });
