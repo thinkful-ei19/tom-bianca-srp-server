@@ -5,37 +5,26 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 
-const {LinkedList, displayQuestion, displayAnswer, findPrevious, reverse } = require('../linkedList');
+const { LinkedList, displayQuestion, displayAnswer, findPrevious, reverse } = require('../linkedList');
 const User = require('../models/user');
+const questions = require('../questions');
+
 
 const passport = require('passport');
 const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
-// router.get('/questions', (req, res) => {
-//   // const userId = req.user.id;
-//   // let filter = { userId };
 
-//   // if (!mongoose.Types.ObjectId.isValid(id)) {
-//   //   const err = new Error('The `id` is not valid');
-//   //   err.status = 400;
-//   //   return next(err);
-//   // }
-//   User.find()
-//     .then(results => {
-//       this.display(results);
-//       // res.json(results);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// });
 
+router.get('/questions', (req, res) => {
+  res.json(questions);
+});
 
 // Get next question in user list
 router.get('/questions/:id', jwtAuth, (req, res, next) => {
   const { id } = req.user;
   User.findById(id)
     .then((result) => {
+      
       res.end(displayQuestion(result.userQuestions));
     })
     .catch((err) => {
@@ -45,26 +34,50 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 
 
 // Answer current question
-router.post('/questions/:id', jwtAuth, (req, res, next) => {
-  console.log('this is req.body', req.body);
-  
-  User.findById(req.user.id)
+router.put('/questions', jwtAuth, (req, res, next) => {
+  const { id } = req.user;
+  const answer = req.body.data;
+  let correctCount;
+  let incorrectCount;
+  // console.log(answer);
+  User.findById(id)
     .then((result) => {
-      if(true){
-      //if (answer === displayAnswer(result.userQuestions)) { 
-        //correctCount++;
-        //take the list and insert node after the next node
-        result.userQuestions.insertAfter(result.userQuestions.next.next);
-        //display next question
-        // console.log(displayQuestion(result.userQuestions.next));
-        res.end(displayQuestion(result.userQuestions.next));
-        
-      } else {
-        //incorrectCount++;
-        result.userQuestions.insertAfter(result.userQuestions.next);
-        res.end('sorry, try again');
-        
+      console.log(result.userQuestions.head);
+      if (answer === displayAnswer(result.userQuestions).toLowerCase()) {
+        let newHead = result.userQuestions.head.next;
+        correctCount++;
+        let tempNode = result.userQuestions.head;
+        while (tempNode.next !== null) {
+          tempNode = tempNode.next;
+        }
+        tempNode.next = result.userQuestions.head;
+        tempNode.next.next = null;
+        result.userQuestions.head = newHead;
+
+        User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
+          .then(user => {
+            res.json(user);
+          });
       }
+      else {
+        incorrectCount++;
+        let newHead = result.userQuestions.head.next;
+        let tempNode = result.userQuestions.head;
+        for (let i = 0; i < 2; i++) {
+          tempNode = tempNode.next;
+        }
+        result.userQuestions.head.next = tempNode.next;
+        tempNode.next = result.userQuestions.head;
+        result.userQuestions.head = newHead;
+
+        User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
+          .then(user => {
+            res.json(user);
+          });
+      }
+    })
+    .then(() => {
+      return res.json({ answer });
     })
     .catch((err) => {
       next(err);
