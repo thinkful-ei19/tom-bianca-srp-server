@@ -35,15 +35,19 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 router.put('/questions', jwtAuth, (req, res, next) => {
   const { id } = req.user;
   const answer = req.body.data;
-  let correctCount;
-  let incorrectCount;
-  // console.log(answer);
+  let correct;
+  let dragons;
   User.findById(id)
     .then((result) => {
-      console.log(result.userQuestions.head);
+      console.log(result);
+      dragons = result.dragons;
+      let mValue = result.userQuestions.head.value.mValue;
+      // if user response is correct then execute block bellow
       if (answer === displayAnswer(result.userQuestions).toLowerCase()) {
+        dragons+=1;
+        mValue = mValue * 2;
         let newHead = result.userQuestions.head.next;
-        correctCount++;
+        correct = true;
         let tempNode = result.userQuestions.head;
         while (tempNode.next !== null) {
           tempNode = tempNode.next;
@@ -52,13 +56,15 @@ router.put('/questions', jwtAuth, (req, res, next) => {
         tempNode.next.next = null;
         result.userQuestions.head = newHead;
 
-        User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
+        User.updateOne({ _id: id }, { $set: { userQuestions: result.userQuestions , dragons: result.dragons } })
           .then(user => {
-            res.json(user);
+            return res.json(user);
           });
       }
+      // if user response is NOT correct then execute block bellow
       else {
-        incorrectCount++;
+        correct = false;
+        mValue = 1;
         let newHead = result.userQuestions.head.next;
         let tempNode = result.userQuestions.head;
         for (let i = 0; i < 2; i++) {
@@ -70,9 +76,10 @@ router.put('/questions', jwtAuth, (req, res, next) => {
 
         User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
           .then(user => {
-            res.json(user);
+            return res.json(user);
           });
       }
+      res.json({ answer, correct, dragons });
     })
     .catch((err) => {
       next(err);
