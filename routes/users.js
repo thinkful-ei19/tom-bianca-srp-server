@@ -3,7 +3,7 @@
 const express = require('express');
 
 const User = require('../models/user');
-const LinkedList = require('../linkedList');
+const {LinkedList} = require('../linkedList');
 const Question = require('../data');
 const mongoose = require('mongoose');
 

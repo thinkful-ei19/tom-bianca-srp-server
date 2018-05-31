@@ -155,21 +155,17 @@ class LinkedList {
 
 function displayQuestion(list) {
   if (list.head) {
-    console.log(list.head.value);
     return list.head.value.title;
   } else {
-    console.log('Empty List');
-    return;
+    return null;
   }
 }
 
 function displayAnswer(list) {
   if (list.head) {
-    console.log(list.head.value);
     return list.head.value.content;
   } else {
-    console.log('Empty List');
-    return;
+    return null;
   }
 }
 

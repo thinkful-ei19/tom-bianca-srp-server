@@ -47,11 +47,8 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 // Answer current question
 router.post('/questions/:id', jwtAuth, (req, res, next) => {
   console.log('this is req.body', req.body);
-
-  let correctCount;
-  let incorrectCount;
   
-  User.findById(id)
+  User.findById(req.user.id)
     .then((result) => {
       if(true){
       //if (answer === displayAnswer(result.userQuestions)) { 
