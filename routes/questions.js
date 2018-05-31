@@ -33,9 +33,9 @@ const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: tr
 
 // Get next question in user list
 router.get('/questions/:id', jwtAuth, (req, res, next) => {
-  const { id } = req.user;
-  User.findById(id)
+  User.findById(req.user.id)
     .then((result) => {
+      console.log(result.userQuestions);
       res.end(displayQuestion(result.userQuestions));
     })
     .catch((err) => {
@@ -46,15 +46,15 @@ router.get('/questions/:id', jwtAuth, (req, res, next) => {
 
 // Answer current question
 router.post('/questions/:id', jwtAuth, (req, res, next) => {
-  console.log('this is req.body', req.body);
-  
+  console.log('this is req.body', req.body.content);
   User.findById(req.user.id)
     .then((result) => {
-      if(true){
+      console.log(result.userQuestions);
+      if(displayAnswer(result.userQuestions) === req.body.content){
       //if (answer === displayAnswer(result.userQuestions)) { 
         //correctCount++;
         //take the list and insert node after the next node
-        result.userQuestions.insertAfter(result.userQuestions.next.next);
+        //result.userQuestions.insertAfter(result.userQuestions.next.next);
         //display next question
         // console.log(displayQuestion(result.userQuestions.next));
         res.end(displayQuestion(result.userQuestions.next));
