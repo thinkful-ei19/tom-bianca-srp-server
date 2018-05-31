@@ -1,39 +1,49 @@
 [{
     "title": "Ābrazÿrys",
-    "content": "Wife"
+    "content": "Wife",
+    "memVal": 1
 },
 {
     "title": "Gēlion",
-    "content": "Silver"
+    "content": "Silver",
+    "memVal": 1
 },
 {
     "title": "Aderī",
-    "content": "Soon"
+    "content": "Soon",
+    "memVal": 1
 },
 {
     "title": "Aderves",
-    "content": "Quickness"
+    "content": "Quickness",
+    "memVal": 1
 },
 {
     "title": "Ānogar",
-    "content": "Blood"
+    "content": "Blood",
+    "memVal": 1
 },
 {
     "title": "Arlie",
-    "content": "New"
+    "content": "New",
+    "memVal": 1
 },
 {
     "title": "Averilla",
-    "content": "Wine"
+    "content": "Wine",
+    "memVal": 1
 },
 {
     "title": "Azantys",
-    "content": "Soldier"
+    "content": "Soldier",
+    "memVal": 1
 },
 {
     "title": "Biēnon",
-    "content": "Mountain"
+    "content": "Mountain",
+    "memVal": 1    
 },{
     "title": "Bode",
-    "content": "Tail"
+    "content": "Tail",
+    "memVal": 1
 }]
