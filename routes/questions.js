@@ -55,41 +55,49 @@ function insertAt(index, item) {
 router.put('/questions', jwtAuth, (req, res, next) => {
   const { id } = req.user;
   const answer = req.body.data;
-  let correctCount;
-  let incorrectCount;
-  let memVal = 1;
-  // console.log(answer);
+
+  let correct;
+  let dragons;
   User.findById(id)
     .then((result) => {
+      console.log(result);
+      dragons = result.dragons;
+      let mValue = result.userQuestions.head.value.mValue;
+      // if user response is correct then execute block bellow
+
       if (answer === displayAnswer(result.userQuestions).toLowerCase()) {
+        dragons+=1;
+        console.log(mValue);
+        mValue = mValue * 2;
+        console.log(mValue);
         let newHead = result.userQuestions.head.next;
-        //making next question the new head
-        correctCount++;
+        correct = true;
         let tempNode = result.userQuestions.head;
-        //tempNode.value.memVal = tempNode.value.memVal*2;
-        while (tempNode.next !== null) {
-          tempNode = tempNode.next;
+        tempNode.value.mValue = mValue;
+        for (let i = 0; i <= mValue; i++) {
+          if (tempNode.next !== null) {
+            tempNode = tempNode.next;
+          }
         }
-        // while (tempNode.next.value.memVal > tempNode.value.memVal) {
-        //   tempNode = tempNode.next;
-        // } 
-        //when the next temp node is empty
-        //set the correct question to the last one in ll
+        result.userQuestions.head.next = tempNode.next;
+
         tempNode.next = result.userQuestions.head;
-        tempNode.next.next = null;
         result.userQuestions.head = newHead;
 
-        User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
+        User.updateOne({ _id: id }, { $set: { userQuestions: result.userQuestions , dragons: result.dragons } })
           .then(user => {
-            res.json(user);
+            return res.json(user);
           });
       }
+      // if user response is NOT correct then execute block bellow
       else {
-        incorrectCount++;
-        memVal = 1;
+        correct = false;
+        mValue = 1;
         let newHead = result.userQuestions.head.next;
         let tempNode = result.userQuestions.head;
-        for (let i = 0; i < memVal; i++) {
+        tempNode.value.mValue = mValue;
+        for (let i = 0; i < 2; i++) {
+
           tempNode = tempNode.next;
         }
       
@@ -99,12 +107,15 @@ router.put('/questions', jwtAuth, (req, res, next) => {
 
         User.findOneAndUpdate({ _id: id }, { $set: { userQuestions: result.userQuestions } })
           .then(user => {
-            res.json(user);
+            return res.json(user);
           });
       }
-      //if memvalue is greater than the length of the list
+
+      res.json({ answer, correct, dragons });
+
     })
     .catch((err) => {
+      console.log(err);
       next(err);
     });
 });

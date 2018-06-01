@@ -1,52 +1,54 @@
 'use strict';
 const data =[{
-  title : "Ābrazÿrys",
-  content : "Wife",
-  memVal : 1
+
+  title: 'Ābrazÿrys',
+  content: 'Wife',
+  mValue: 1
 },
 {
-  title : "Gēlion",
-  content : "Silver",
-  memVal : 1
+  title: 'Gēlion',
+  content: 'Silver',
+  mValue: 1
 },
 {
-  title : "Aderī",
-  content : "Soon",
-  memVal : 1
+  title: 'Aderī',
+  content: 'Soon',
+  mValue: 1
 },
 {
-  title : "Aderves",
-  content : "Quickness",
-  memVal : 1
+  title: 'Aderves',
+  content: 'Quickness',
+  mValue: 1
 },
 {
-  title : "Ānogar",
-  content : "Blood",
-  memVal : 1
+  title: 'Ānogar',
+  content: 'Blood',
+  mValue: 1
 },
 {
-  title : "Arlie",
-  content : "New",
-  memVal : 1
+  title: 'Arlie',
+  content: 'New',
+  mValue: 1
 },
 {
-  title : "Averilla",
-  content : "Wine",
-  memVal : 1
+  title: 'Averilla',
+  content: 'Wine',
+  mValue: 1
 },
 {
-  title : "Azantys",
-  content : "Soldier",
-  memVal : 1
+  title: 'Azantys',
+  content: 'Soldier',
+  mValue: 1
 },
 {
-  title : "Biēnon",
-  content : "Mountain",
-  memVal : 1    
-},{
-  title : "Bode",
-  content : "Tail",
-  memVal : 1
+  title: 'Biēnon',
+  content: 'Mountain',
+  mValue: 1
+}, {
+  title: 'Bode',
+  content: 'Tail',
+  mValue: 1
+
 }];
 
 module.exports = data;
