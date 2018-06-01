@@ -1,5 +1,6 @@
 'use strict';
 const data =[{
+
   title: 'Ābrazÿrys',
   content: 'Wife',
   mValue: 1
@@ -47,6 +48,7 @@ const data =[{
   title: 'Bode',
   content: 'Tail',
   mValue: 1
+
 }];
 
 module.exports = data;
