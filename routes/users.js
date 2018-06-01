@@ -9,28 +9,28 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
+//==========USE ONLY FOR TESTING ============//
+// router.get('/users', (req, res, next) => {
+//   User.find()
+//     .then((results) => {
+//       res.json(results);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
 
-router.get('/users', (req, res, next) => {
-  User.find()
-    .then((results) => {
-      res.json(results);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
+// router.get('/users/:id', (req, res, next) => {
+//   const { id } = req.params;
 
-router.get('/users/:id', (req, res, next) => {
-  const { id } = req.params;
-
-  User.findById(id)
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
+//   User.findById(id)
+//     .then((result) => {
+//       res.json(result);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
 
 
 /* ========== POST/CREATE AN ITEM ========== */
