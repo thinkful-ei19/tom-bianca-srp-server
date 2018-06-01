@@ -41,7 +41,7 @@ router.put('/questions', jwtAuth, (req, res, next) => {
       let mValue = result.userQuestions.head.value.mValue;
       // if user response is correct then execute block bellow
       if (answer === displayAnswer(result.userQuestions).toLowerCase()) {
-        dragons+=1;
+        result.dragons++;
         mValue = mValue * 2;
         let newHead = result.userQuestions.head.next;
         correct = true;
