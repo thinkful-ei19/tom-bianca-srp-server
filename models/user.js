@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
   userQuestions: { 
     type: Object, 
     default: null 
+  },
+  dragons: {
+    type: Number,
+    default: 0
   }
 });
 

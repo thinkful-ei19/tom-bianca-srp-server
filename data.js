@@ -1,42 +1,52 @@
 'use strict';
 const data =[{
   title: 'Ābrazÿrys',
-  content: 'Wife'
+  content: 'Wife',
+  mValue: 1
 },
 {
   title: 'Gēlion',
-  content: 'Silver'
+  content: 'Silver',
+  mValue: 1
 },
 {
   title: 'Aderī',
-  content: 'Soon'
+  content: 'Soon',
+  mValue: 1
 },
 {
   title: 'Aderves',
-  content: 'Quickness'
+  content: 'Quickness',
+  mValue: 1
 },
 {
   title: 'Ānogar',
-  content: 'Blood'
+  content: 'Blood',
+  mValue: 1
 },
 {
   title: 'Arlie',
-  content: 'New'
+  content: 'New',
+  mValue: 1
 },
 {
   title: 'Averilla',
-  content: 'Wine'
+  content: 'Wine',
+  mValue: 1
 },
 {
   title: 'Azantys',
-  content: 'Soldier'
+  content: 'Soldier',
+  mValue: 1
 },
 {
   title: 'Biēnon',
-  content: 'Mountain'
+  content: 'Mountain',
+  mValue: 1
 }, {
   title: 'Bode',
-  content: 'Tail'
+  content: 'Tail',
+  mValue: 1
 }];
 
 module.exports = data;
