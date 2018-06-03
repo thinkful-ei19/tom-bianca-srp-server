@@ -7,6 +7,9 @@ const {LinkedList} = require('../linkedList');
 const Question = require('../data');
 const mongoose = require('mongoose');
 
+const passport = require('passport');
+const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
+
 const router = express.Router();
 
 //==========USE ONLY FOR TESTING ============//
@@ -20,17 +23,17 @@ const router = express.Router();
 //     });
 // });
 
-// router.get('/users/:id', (req, res, next) => {
-//   const { id } = req.params;
+router.get('/users/:id',jwtAuth, (req, res, next) => {
+  const { id } = req.user;
 
-//   User.findById(id)
-//     .then((result) => {
-//       res.json(result);
-//     })
-//     .catch((err) => {
-//       next(err);
-//     });
-// });
+  User.findById(id)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
 
 /* ========== POST/CREATE AN ITEM ========== */
